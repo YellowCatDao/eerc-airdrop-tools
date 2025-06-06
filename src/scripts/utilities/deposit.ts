@@ -33,6 +33,7 @@ async function main(): Promise<void> {
         })
         .help();
 
+    
     const args = parseArgs<DepositConfig>(['amount'], yargsInstance);
     const {eerc, config, clients} = await createEERCInstance(args);
 

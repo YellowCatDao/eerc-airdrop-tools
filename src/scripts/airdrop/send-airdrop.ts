@@ -220,10 +220,11 @@ async function main(): Promise<void> {
 
     const yargsInstance = yargs(hideBin(process.argv))
         .options({
-            'file': {
+            'recipients-file': {
                 type: 'string',
                 description: 'Path to CSV file with recipients',
-                demandOption: true
+                demandOption: true,
+                alias: 'file'
             },
             'dry-run': {
                 type: 'boolean',
@@ -233,7 +234,7 @@ async function main(): Promise<void> {
         })
         .help();
 
-    const args = parseArgs<AirdropConfig>(['recipientsFile', 'tokenAddress'], yargsInstance);
+    const args = parseArgs<AirdropConfig>(['recipientsFile'], yargsInstance);
 
     // Make path absolute if it's relative
     const absoluteFilePath = path.isAbsolute(args.recipientsFile)
@@ -365,8 +366,8 @@ async function main(): Promise<void> {
 
             console.log(`Transaction: ${transferTxHash}`);
 
-            // Wait for transaction confirmation
-            await clients.publicClient.waitForTransactionReceipt({hash: transferTxHash as Address});
+            // Wait for transaction confirmation; 3 confirmations to avoid 'eth_getBlockByNumber' issues in old viem.
+            await clients.publicClient.waitForTransactionReceipt({hash: transferTxHash as Address, confirmations: 3});
 
             // Record success
             state.transferSucceeded.push({
@@ -398,7 +399,7 @@ async function main(): Promise<void> {
 
         // Pause between transfers (except for the last one)
         if (i < stillToProcess.length - 1) {
-            await interruptibleSleep(5);
+            await interruptibleSleep(2);
         }
     }
 
