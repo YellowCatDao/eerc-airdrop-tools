@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "register": "tsx src/scripts/admin/register.ts",
     "set-auditor": "tsx src/scripts/admin/set-auditor.ts",
     "simple-steps": "tsx src/scripts/testing/simple-steps.ts",
     "check-balance": "tsx src/scripts/utilities/check-balance.ts",

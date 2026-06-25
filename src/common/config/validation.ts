@@ -5,8 +5,10 @@
 import {BaseConfig, ChainOption} from './types.js';
 import {isValidAddress} from '../web3/types.js';
 
+const SUPPORTED_CHAINS: ChainOption[] = ['fuji', 'mainnet', 'base', 'hyperevm'];
+
 export function validateChain(chain: string): chain is ChainOption {
-    return chain === 'fuji' || chain === 'mainnet';
+    return (SUPPORTED_CHAINS as string[]).includes(chain);
 }
 
 export function validatePrivateKey(key?: string): boolean {
@@ -22,7 +24,7 @@ export function validatePrivateKey(key?: string): boolean {
  */
 export function validateConfig<T extends BaseConfig>(config: T): T {
     if (!validateChain(config.chain)) {
-        throw new Error(`Invalid chain: ${config.chain}. Must be "fuji" or "mainnet".`);
+        throw new Error(`Invalid chain: ${config.chain}. Must be one of ${SUPPORTED_CHAINS.join(', ')}.`);
     }
 
     // Validate required fields

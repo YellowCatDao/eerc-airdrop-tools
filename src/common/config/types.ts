@@ -5,7 +5,7 @@
 import {Address} from "wagmi";
 
 // Chain options
-export type ChainOption = 'fuji' | 'mainnet';
+export type ChainOption = 'fuji' | 'mainnet' | 'base' | 'hyperevm';
 
 // Base configuration for all scripts
 export interface BaseConfig {

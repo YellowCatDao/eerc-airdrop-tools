@@ -34,9 +34,9 @@ export function parseArgs<T extends BaseConfig>(
             'chain': {
                 alias: 'c',
                 type: 'string',
-                description: 'Chain to use (fuji or mainnet)',
+                description: 'Chain to use (fuji, mainnet, base, hyperevm)',
                 default: 'fuji',
-                choices: ['fuji', 'mainnet']
+                choices: ['fuji', 'mainnet', 'base', 'hyperevm']
             },
             'eerc-contract-address': {
                 alias: 'eerc',
